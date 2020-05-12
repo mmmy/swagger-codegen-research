@@ -1,0 +1,63 @@
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#description}}
+/**
+* {{&description}}
+*/
+{{/description}}
+  {{classname}}
+
+  export declare namespace {{classname}} {
+    {{#operation}}
+      interface {{nickname}}{{httpMethod}}Request {
+        {{#allParams}}
+          {{paramName}}{{#required}}?{{/required}}: {{dataType}} // {{description}}
+        {{/allParams}}
+      }
+    {{/operation}}
+  }
+
+  /**
+  * methods
+  */
+
+  {{#operation}}
+    /**
+     * {{&notes}}
+     {{#summary}}
+     * @summary {{&summary}}
+     {{/summary}}
+     {{#allParams}}
+     * @param {{paramName}} {{dataType}} {{description}}
+     {{/allParams}}
+     */
+
+     nickname: {{nickname}} -> {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}}
+
+
+  {{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+
+========================================
+
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+
+  {{classname}}
+
+{{#operation}}
+  /**
+  * methods ---------------
+  */
+
+     nickname: {{nickname}} -> {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}}
+
+
+  {{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}

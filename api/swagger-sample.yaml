@@ -1,0 +1,428 @@
+swagger: '2.0'
+info:
+  contact: {}
+  title: 大数据中台
+  version: 1.0.0
+  description: 大数据中台
+basePath: /
+tags: []
+schemes:
+  - http
+
+paths:
+  /api/datawork/folder:
+    post:
+      tags:
+        - datawork
+      summary: 添加（修改）目录
+      description: 添加（修改）目录
+      operationId: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      deprecated: false
+      parameters:
+        - name: raw_payload
+          in: body
+          description: ''
+          required: false
+          schema:
+            $ref: '#/definitions/post_api_datawork_folder'
+      responses:
+        '200':
+          description: ' '
+          schema:
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                type: string
+            type: object
+    delete:
+      tags:
+        - datawork
+      summary: 删除目录
+      description: 删除目录
+      operationId: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      deprecated: false
+      parameters:
+        - name: raw_payload
+          in: body
+          description: ''
+          required: false
+          schema:
+            $ref: '#/definitions/delete_api_datawork_folder'
+      responses:
+        '200':
+          description: ' '
+          schema:
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                type: string
+            type: object
+  /api/datawork/get:
+    get:
+      tags:
+        - datawork
+      summary: 获取流程信息
+      description: 获取流程信息
+      operationId: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      deprecated: false
+      parameters:
+        - name: id
+          in: query
+          description: 流程ID
+          required: true
+          type: string
+        - name: code
+          in: query
+          description: 流程code
+          required: true
+          type: string
+        - name: stage
+          in: query
+          description: 流程阶段(配合stage使用)
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ' '
+          schema:
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                properties:
+                  status:
+                    type: string
+                  schedule:
+                    type: string
+                  nodes:
+                    properties:
+                      type:
+                        type: string
+                      node_id:
+                        type: string
+                      name:
+                        type: string
+                      folder_id:
+                        type: string
+                      flow_object_type:
+                        type: string
+                      flow_id:
+                        type: string
+                    type: object
+                  next_codes:
+                    items:
+                      properties:
+                        name:
+                          type: string
+                        code:
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    type: string
+                  lines:
+                    properties:
+                      behind_node_id:
+                        type: string
+                      ahead_node_id:
+                        type: string
+                    type: object
+                  id:
+                    type: string
+                  depend_codes:
+                    items:
+                      properties:
+                        name:
+                          type: string
+                        code:
+                          type: string
+                      type: object
+                    type: array
+                  code:
+                    type: string
+                type: object
+            type: object
+  /data_source/get:
+    get:
+      tags:
+        - data_source
+      summary: 获取数据源详情
+      description: 获取数据源详情
+      operationId: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      deprecated: false
+      parameters:
+        - name: id
+          in: query
+          description: 数据源ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ' '
+          schema:
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                properties:
+                  type:
+                    type: string
+                  name:
+                    type: string
+                  is_buildin:
+                    type: number
+                  id:
+                    type: string
+                  icon:
+                    type: string
+                  description:
+                    type: string
+                  conn_str:
+                    properties:
+                      user:
+                        type: string
+                      use_ssh:
+                        type: number
+                      table_name_prefix:
+                        type: string
+                      ssh_user:
+                        type: string
+                      ssh_port:
+                        type: string
+                      ssh_password:
+                        type: string
+                      ssh_host:
+                        type: string
+                      port:
+                        type: number
+                      password:
+                        type: string
+                      name:
+                        type: string
+                      host:
+                        type: string
+                      database:
+                        type: string
+                    type: object
+                  code:
+                    type: string
+                type: object
+            type: object
+
+  /api/project_table/:
+    put:
+      tags:
+        - Project_table
+      summary: 项目表中修改表信息
+      description: 项目表中修改表信息
+      operationId: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      deprecated: false
+      parameters:
+        - name: raw_payload
+          in: body
+          description: ''
+          required: false
+          schema:
+            $ref: '#/definitions/put_api_project_table_'
+      responses:
+        '200':
+          description: ' '
+          schema:
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                type: boolean
+            type: object
+    post:
+      tags:
+        - Project_table
+      summary: 项目表中新增表信息
+      description: 项目表中新增表信息
+      operationId: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      deprecated: false
+      parameters:
+        - name: raw_payload
+          in: body
+          description: ''
+          required: false
+          schema:
+            $ref: '#/definitions/post_api_project_table_'
+      responses:
+        '200':
+          description: ' '
+          schema:
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                type: boolean
+            type: object
+
+definitions:
+  post_api_datawork_folder:
+    properties:
+      parent_id:
+        type: string
+        description: 目录父节点
+      name:
+        type: string
+        description: 名称
+      id:
+        type: string
+        description: '目录id,为空表示新增'
+      flow_object_type:
+        type: string
+        description: 所属类型
+      flow_code:
+        type: string
+        description: 流程编码
+    type: object
+  delete_api_datawork_folder:
+    properties:
+      id:
+        type: string
+        description: 目录id
+    type: object
+
+  put_api_project_table_:
+    properties:
+      table_name:
+        type: string
+      subject_id:
+        type: string
+      partition_fields:
+        items:
+          properties:
+            particle_size:
+              type: string
+            name:
+              type: string
+            length:
+              type: number
+            field_type:
+              type: string
+            description:
+              type: string
+            date_format:
+              type: string
+          type: object
+        type: array
+      name_cn:
+        type: string
+      logic_id:
+        type: string
+      layer_id:
+        type: string
+      id:
+        type: string
+      fields:
+        items:
+          properties:
+            primary_key:
+              type: number
+            name_cn:
+              type: string
+            name:
+              type: string
+            length:
+              type: number
+            field_type:
+              type: string
+            description:
+              type: string
+          type: object
+        type: array
+    type: object
+
+  post_api_project_table_:
+    properties:
+      table_name:
+        type: string
+      partition_table:
+        type: number
+      partition_fields:
+        items:
+          properties:
+            particle_size:
+              type: string
+            name:
+              type: string
+            length:
+              type: number
+            field_type:
+              type: string
+            description:
+              type: string
+            date_format:
+              type: string
+          type: object
+        type: array
+      name_cn:
+        type: string
+      life_cycle:
+        type: number
+      layer_id:
+        type: string
+      fields:
+        items:
+          properties:
+            primary_key:
+              type: number
+            name_cn:
+              type: string
+            name:
+              type: string
+            length:
+              type: number
+            field_type:
+              type: string
+            description:
+              type: string
+          type: object
+        type: array
+      external_table:
+        type: number
+      description:
+        type: string
+      ddl:
+        type: string
+    type: object

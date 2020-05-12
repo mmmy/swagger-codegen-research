@@ -1,0 +1,40 @@
+{{>licenseInfo}}
+
+let defaultBasePath = '{{{basePath}}}';
+
+{{#models}}
+{{#model}}
+
+{{#description}}
+/**
+* {{{description}}}
+*/
+{{/description}}
+interface {{classname}} { // {{#parent}}extends {{{parent}}} {{/parent}}
+{{#vars}}
+{{#description}}
+    /**
+    * {{{description}}}
+    */
+{{/description}}
+    '{{name}}'{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+{{/vars}}
+}
+{{/model}}
+{{/models}}
+
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+export declare namespace {{classname}}Request {
+  {{#operation}}
+  interface {{nickname}} {
+    {{#allParams}}
+    {{paramName}}{{^required}}?{{/required}}: {{{dataType}}}
+    {{/allParams}}
+  }
+  {{/operation}}
+}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
