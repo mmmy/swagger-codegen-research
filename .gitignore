@@ -104,3 +104,4 @@ dist
 .tern-port
 swagger-codegen-cli-2.jar
 .swagger-codegen
+samples

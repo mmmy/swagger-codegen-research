@@ -1,0 +1,286 @@
+swagger: '2.0'
+info:
+  description: This is a sample APIs
+  version: 1.0.0
+  title: Sample APIs
+  # put the contact info for your development or API team
+  contact:
+    email: you@your-company.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# tags are used for organizing operations
+tags:
+- name: json_response
+  description: 返回数据为json格式
+- name: param_in_path
+  description: 参数在路径中
+- name: form_data
+  description: 表单数据
+- name: text_plain
+  description: 纯文本
+  
+paths:
+  /response_is_json:
+    get:
+      tags:
+      - json_response
+      summary: get方式, 返回json数组
+      operationId: searchInventory
+      description: |
+        返回json数据类型的示例, 参数含有数组类型
+      produces:
+      - application/json
+      # - application/xml
+      - text/plain; charset=utf-8
+      parameters:
+      - in: query
+        name: searchString
+        description: 这是个可选的string类型
+        required: false
+        type: string
+      - in: query
+        name: skip
+        required: true
+        description: 这个是必须选的int类型, 最小是0
+        type: integer
+        format: int32
+        minimum: 0
+      - in: query
+        name: filter
+        description: 可选的string数组类型
+        type: array
+        items:
+          type: string
+          enum: ['type_1' , 'type_2', 'type_3']
+      responses:
+        200:
+          description: 200 成功返回的json数据
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/InventoryItem'
+        400:
+          description: bad input parameter
+        default:
+          description: 返回已知错误
+          schema:
+            type: object
+            properties:
+              msg:
+                type: string
+              result:
+                type: boolean
+    post:
+      tags:
+      - json_response
+      summary: post方式, 返回json对象
+      operationId: addInventory
+      description: Adds an item to the system
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: inventoryItem
+        description: Inventory item to add
+        schema:
+          $ref: '#/definitions/InventoryItem'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  '/user/{id}':
+    get:
+      tags:
+      - param_in_path
+      summary: 返回用户信息
+      operationId: getUserInfo
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: success
+          schema:
+            xml:
+              name: root
+            properties:
+              id:
+                type: string
+                example: d290f1ee-6c54-4b01-90e6-d701748f0851
+              name:
+                type: string
+                example: Kelly
+              goods:
+                type: array
+                items:
+                  type: string
+                  example: 'fui'
+  /user/{id}/{order_id}:
+    delete:
+      tags:
+      - param_in_path
+      summary: 删除订单
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: order_id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: success
+          schema:
+            xml:
+              name: res
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+  /{folder_id}/upload_file:
+    post:
+      tags:
+      - form_data
+      - param_in_path
+      summary: 上传文件
+      consumes:
+      - multipart/form-data # 注意与application/x-www-form-urlencoded 区别
+      # application/x-www-form-urlencoded： 窗体数据被编码为名称/值对。这是标准的编码格式。 
+      # multipart/form-data： 窗体数据被编码为一条消息，页上的每个控件对应消息中的一个部分。 
+      # text/plain： 窗体数据以纯文本形式进行编码，其中不含任何控件或格式字符
+      # - application/octet-stream
+      produces:
+      - application/json
+      parameters:
+      - name: folder_id
+        in: path
+        required: true
+        type: string
+      - name: name
+        in: formData
+        required: true
+        type: string
+      - name: file
+        in: formData
+        required: false
+        type: file
+      responses:
+        200:
+          description: success
+          schema:
+            properties:
+              code:
+                type: integer
+                format: int32
+              type:
+                type: string
+              message:
+                type: string
+  /user:
+    put:
+      tags:
+      - form_data
+      summary: put form_data
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+      - name: name
+        in: formData
+        required: true
+        type: string
+      - name: gender
+        in: formData
+        required: true
+        type: number
+        enum: [0, 1]
+      - name: description
+        in: formData
+        required: false
+        type: string
+      responses:
+        200:
+          description: success
+  /text_plain:
+    post:
+      tags:
+      - text_plain
+      summary: 纯文本 post, 比如含有sql的json数据, base64编码之后
+      consumes:
+      - text/plain
+      # - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          type: string
+          properties:
+            id:
+              type: string
+            sql:
+              type: string
+      responses:
+        200:
+          description: success
+          
+definitions:
+  InventoryItem:
+    type: object
+    required:
+    - id
+    - name
+    - manufacturer
+    - releaseDate
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      name:
+        type: string
+        example: Widget Adapter
+      releaseDate:
+        type: string
+        format: date-time
+        example: 2016-08-29T09:12:33.001Z
+      manufacturer:
+        $ref: '#/definitions/Manufacturer'
+  Manufacturer:
+    required:
+    - name
+    properties:
+      name:
+        type: string
+        example: ACME Corporation
+      homePage:
+        type: string
+        format: url
+        example:  https://www.acme-corp.com
+      phone:
+        type: string
+        example: 408-867-5309
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /mmmy/all-types/1.0.0
+schemes:
+ - https
