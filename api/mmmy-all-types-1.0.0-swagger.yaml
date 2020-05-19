@@ -114,6 +114,7 @@ paths:
         200:
           description: success
           schema:
+            type: object
             properties:
               id:
                 type: string
@@ -147,6 +148,7 @@ paths:
         200:
           description: success
           schema:
+            type: object
             xml:
               name: res
             properties:
@@ -185,6 +187,7 @@ paths:
         200:
           description: success
           schema:
+            type: object
             properties:
               code:
                 type: integer
