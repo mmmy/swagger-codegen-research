@@ -114,8 +114,6 @@ paths:
         200:
           description: success
           schema:
-            xml:
-              name: root
             properties:
               id:
                 type: string
@@ -245,6 +243,7 @@ paths:
           
 definitions:
   InventoryItem:
+    description: 这是 InvertoryItem的描述
     type: object
     required:
     - id
@@ -258,9 +257,11 @@ definitions:
         example: d290f1ee-6c54-4b01-90e6-d701748f0851
       name:
         type: string
+        description: 名字
         example: Widget Adapter
       releaseDate:
         type: string
+        description: 发行日期
         format: date-time
         example: 2016-08-29T09:12:33.001Z
       manufacturer:

@@ -23,18 +23,28 @@ interface {{classname}} { // {{#parent}}extends {{{parent}}} {{/parent}}
 {{/model}}
 {{/models}}
 
+// 这里生成Reqest 和 Response
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
 export declare namespace {{classname}}Request {
   {{#operation}}
-  interface {{nickname}} {
+  interface {{operationIdCamelCase}} {
     {{#allParams}}
     {{paramName}}{{^required}}?{{/required}}: {{{dataType}}}
     {{/allParams}}
   }
   {{/operation}}
 }
+
+export declare namespace {{classname}}Response {
+  {{#operation}}
+  interface {{operationIdCamelCase}} {
+    body: {{returnType}}
+  }
+  {{/operation}}
+}
+
 {{/operations}}
 {{/apis}}
 {{/apiInfo}}
