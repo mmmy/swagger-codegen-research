@@ -26,6 +26,6 @@ fi
 
 # if you've executed sbt assembly previously it will use that instead.
 export JAVA_OPTS="${JAVA_OPTS} -DdebugOperations -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"
-ags="$@ generate -i ../api/sample.json -l typescript-jquery -Dmodels -Dapis -DsupportingFiles -o samples/typescript-jquery-sample"
+ags="$@ generate -i ../api/mmmy-all-types-1.0.0-swagger.yaml -l typescript-jquery -o samples/typescript-jquery-sample"
 
 java $JAVA_OPTS -jar $executable $ags
