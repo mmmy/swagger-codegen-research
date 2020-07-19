@@ -105,3 +105,4 @@ dist
 swagger-codegen-cli-2.jar
 .swagger-codegen
 samples
+otherApi
